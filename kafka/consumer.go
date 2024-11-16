@@ -3,7 +3,9 @@ package kafka
 import (
     "github.com/confluentinc/confluent-kafka-go/kafka"
     "data-streaming/utils"
+    "fmt"
 )
+
 
 func Consume(streamID string) []map[string]interface{} {
     topic := "stream_" + streamID
@@ -22,9 +24,11 @@ func Consume(streamID string) []map[string]interface{} {
     var results []map[string]interface{}
     for {
         msg, err := consumer.ReadMessage(-1)
+        
         if err == nil {
             data := map[string]interface{}{"result": string(msg.Value)}
             results = append(results, data)
+            fmt.Println("Data received from Kafka:", data)
         } else {
             break
         }
