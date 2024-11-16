@@ -32,6 +32,10 @@ After this process is created, use the command above the send data to this strea
 
 ![alt text](image-1.png)
 
+### Check the metrics
+
+curl http://localhost:8080/metrics
+
 ### Test Data
 
 #### unit_test
