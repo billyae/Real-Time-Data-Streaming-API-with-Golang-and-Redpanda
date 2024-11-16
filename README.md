@@ -14,17 +14,18 @@ Bind Kafka client connections to the container's port 9092.
 Start this WSL terminal and run the follong code:  
 go run main.go
 
-### Start a new stream  
+For the security consideration, you shoud use set the header of the request as the Valid api key (Default is billyae) to use the API or you will be denied the access to all apis.
+### Start a new stream (With the Valid_api_key billyae)
 
-curl -X POST http://localhost:8080/stream/start
+curl -X POST http://localhost:8080/stream/start -H "X-API-Key: billyae"
 
 ### Send data to a stream
 
-curl -X POST http://localhost:8080/stream/{stream_id}/send -H "Content-Type: application/json" -d '{"key":"value"}'
+curl -X POST http://localhost:8080/stream/{streamid}/send -H "X-API-Key: billyae" -d '{"key": "value"}'
 
 ### Receive data to a stream
 
-curl http://localhost:8080/stream/{stream_id}/results
+curl -X GET http://localhost:8080/stream/{streamid}/results -H "X-API-Key: billyae"
 
 It will create a process that will not terminate automatically. 
 
@@ -34,7 +35,11 @@ After this process is created, use the command above the send data to this strea
 
 ### Check the metrics
 
-curl http://localhost:8080/metrics
+curl http://localhost:8080/metrics -H "X-API-Key: billyae"
+
+### Load Testing
+
+ab -n 10000 -c 100 -H "X-API-Key: billyae" -p post_data.json http://localhost:8080/stream/{streamid}/send
 
 ### Test Data
 

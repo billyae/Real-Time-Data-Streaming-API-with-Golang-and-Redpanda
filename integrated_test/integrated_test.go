@@ -14,12 +14,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const apiKey = "billyae"
+
 func TestStartStream(t *testing.T) {
 	router := mux.NewRouter()
 	api.InitializeRoutes(router)
 
 	req, _ := http.NewRequest("POST", "/stream/start", nil)
-
+	req.Header.Set("x-api-key", apiKey) // Add API key header
 
 	response := httptest.NewRecorder()
 	router.ServeHTTP(response, req)
@@ -39,7 +41,7 @@ func TestSendData(t *testing.T) {
 	data := map[string]interface{}{"key": "value"}
 	body, _ := json.Marshal(data)
 	req, _ := http.NewRequest("POST", "/stream/"+streamid+"/send", bytes.NewReader(body))
-
+	req.Header.Set("x-api-key", apiKey) // Add API key header
 
 	response := httptest.NewRecorder()
 	router.ServeHTTP(response, req)
@@ -58,6 +60,8 @@ func TestGetResults(t *testing.T) {
 	api.InitializeRoutes(router)
 
 	req, _ := http.NewRequest("GET", "/stream/"+streamid+"/results", nil)
+	req.Header.Set("x-api-key", apiKey) // Add API key header
+	
 	response := httptest.NewRecorder()
 
 	// Timeout mechanism to avoid infinite wait
