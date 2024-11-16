@@ -6,7 +6,10 @@ import (
 	"fmt"
 )
 
+// Consume consumes messages from a Kafka topic
 func Consume(streamID string) []map[string]interface{} {
+	
+	// Create a new consumer
 	topic := "stream_" + streamID
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers": "localhost:9092",
@@ -18,8 +21,10 @@ func Consume(streamID string) []map[string]interface{} {
 	}
 	defer consumer.Close()
 
+	// Subscribe to the topic
 	consumer.SubscribeTopics([]string{topic}, nil)
 
+	// Consume messages
 	var results []map[string]interface{}
 	for {
 		msg, err := consumer.ReadMessage(-1)

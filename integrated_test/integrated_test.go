@@ -16,6 +16,7 @@ import (
 
 const apiKey = "billyae"
 
+// TestStartStream tests the /stream/start endpoint
 func TestStartStream(t *testing.T) {
 	router := mux.NewRouter()
 	api.InitializeRoutes(router)
@@ -29,7 +30,7 @@ func TestStartStream(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.Code, "Expected HTTP status OK")
 }
 
-
+// TestSendData tests the /stream/{streamid}/send endpoint
 func TestSendData(t *testing.T) {
 
 	streamid := os.Getenv("streamid")
@@ -49,6 +50,7 @@ func TestSendData(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.Code, "Expected HTTP status OK")
 }
 
+// TestGetResults tests the /stream/{streamid}/results endpoint
 func TestGetResults(t *testing.T) {
 
 	streamid := os.Getenv("streamid")

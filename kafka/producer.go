@@ -6,8 +6,10 @@ import (
 	"data-streaming/utils"
 )
 
+// Produce sends a message to a Kafka topic
 var producer *kafka.Producer
 
+// init creates a new Kafka producer
 func init() {
 	var err error
 	producer, err = kafka.NewProducer(&kafka.ConfigMap{
@@ -18,6 +20,7 @@ func init() {
 	}
 }
 
+// Produce sends a message to a Kafka topic
 func Produce(streamID string, data map[string]interface{}) error {
 	topic := "stream_" + streamID
 	message, _ := json.Marshal(data)

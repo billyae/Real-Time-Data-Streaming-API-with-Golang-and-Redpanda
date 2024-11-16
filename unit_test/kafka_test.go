@@ -7,11 +7,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestProduce tests the Produce function
 func TestProduce(t *testing.T) {
 	err := kafka.Produce("test-stream", map[string]interface{}{"key": "value"})
 	assert.Nil(t, err, "Expected Produce to succeed")
 }
 
+// TestConsume tests the Consume function
 func TestConsume(t *testing.T) {
 	var results []map[string]interface{} // Declare results properly as a slice of maps
 	done := make(chan bool, 1)
